@@ -1,15 +1,18 @@
 import { PostCoverImage } from "../PostCoverImage";
-import { PostHeading } from "../PostHeading";
+import { PostSummary } from "../PostSummary";
+import { findAllPublicPosts } from "@/lib/post/queries";
 
-export function PostFeatured() {
-  const slug = "qlq coisa";
-  const postLink = `/post/${slug}`;
+export async function PostFeatured() {
+  const posts = await findAllPublicPosts();
+  const post = posts[0];
+
+  const postLink = `/post/${post.slug}`;
 
   return (
     <section className="grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group">
       <PostCoverImage
         imageProps={{
-          src: "/images/bryen_5.png",
+          src: post.coverImageUrl,
           width: 1200,
           height: 720,
           alt: "Alt da imagem",
@@ -19,25 +22,13 @@ export function PostFeatured() {
           href: postLink,
         }}
       />
-      <div className="flex flex-col gap-4 sm:justify-center">
-        <time
-          className="text-slate-600 text-sm/tight block"
-          dateTime="2025-04-20"
-        >
-          20/24/2025 10:00
-        </time>
-
-        <PostHeading as="h1" url={postLink}>
-          Lorem ipsum dolor sit amet consectetur
-        </PostHeading>
-
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-          similique minima soluta aspernatur vitae tenetur sapiente odio, ea
-          libero cupiditate fugit. Enim eveniet dolorum commodi consequuntur
-          debitis iusto temporibus voluptatum.
-        </p>
-      </div>
+      <PostSummary
+        postHeading="h1"
+        postLink={postLink}
+        createdAt={post.createdAt}
+        title={post.title}
+        excerpt={post.excerpt}
+      />
     </section>
   );
 }
