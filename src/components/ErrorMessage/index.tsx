@@ -19,7 +19,7 @@ export default function ErrorMessage({
       <div
         className={clsx(
           "min-h-[320px] bg-slate-900 text-slate-100",
-          "mb-16 p-8 rounded-xl ",
+          "mb-16 p-8 rounded-xl",
           "flex items-center justify-center text-center"
         )}
       >
